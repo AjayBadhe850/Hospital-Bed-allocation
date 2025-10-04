@@ -248,6 +248,7 @@ class HospitalAssignmentSystem {
 
     // Sample Data Generation
     generateSampleData() {
+        console.log('🔄 Generating sample data...');
         this.hospitals = [];
         this.patients = [];
         this.doctors = [];
@@ -364,6 +365,7 @@ class HospitalAssignmentSystem {
             this.patients.push(patient);
         }
 
+        console.log(`✅ Generated ${this.patients.length} patients`);
         this.updateDaysInHospital();
         this.saveData(); // Save generated data
         this.renderVisualization();
@@ -1149,6 +1151,9 @@ class HospitalAssignmentSystem {
 
     // Navigate to list pages
     navigateToList(listType) {
+        console.log(`🔄 Navigating to ${listType} list...`);
+        console.log(`📊 Current data: ${this.patients.length} patients, ${this.hospitals.length} hospitals, ${this.doctors.length} doctors`);
+        
         // Store current data in localStorage for the list pages
         const systemData = {
             patients: this.patients,
@@ -1156,6 +1161,7 @@ class HospitalAssignmentSystem {
             doctors: this.doctors
         };
         localStorage.setItem('hospitalSystemData', JSON.stringify(systemData));
+        console.log('💾 Data saved to localStorage');
 
         // Navigate to appropriate list page
         switch(listType) {

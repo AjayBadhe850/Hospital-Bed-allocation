@@ -33,6 +33,7 @@ class PatientsListPage {
     }
 
     loadData() {
+        console.log('🔄 Loading data in patients list page...');
         // Get data from localStorage
         const storedData = localStorage.getItem('hospitalSystemData');
         if (storedData) {
@@ -41,9 +42,11 @@ class PatientsListPage {
             this.hospitals = data.hospitals || [];
             this.doctors = data.doctors || [];
             this.filteredPatients = [...this.patients];
+            console.log(`✅ Loaded ${this.patients.length} patients from localStorage`);
             this.displayPatients();
             this.updateSummary();
         } else {
+            console.log('❌ No data found in localStorage');
             this.showNoDataMessage();
         }
     }
