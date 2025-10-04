@@ -225,6 +225,10 @@ class HospitalAssignmentSystem {
         document.getElementById('showBedsAvailability').addEventListener('click', () => {
             this.toggleBedsAvailability();
         });
+
+        document.getElementById('testPatientList').addEventListener('click', () => {
+            this.testPatientListFunctionality();
+        });
     }
 
     updateUrgencyDistribution() {
@@ -1147,6 +1151,20 @@ class HospitalAssignmentSystem {
             const timeDiff = currentDate.getTime() - patient.admissionDate.getTime();
             patient.daysInHospital = Math.floor(timeDiff / (1000 * 3600 * 24));
         });
+    }
+
+    // Test patient list functionality
+    testPatientListFunctionality() {
+        console.log('🧪 Testing patient list functionality...');
+        console.log(`📊 Current data: ${this.patients.length} patients, ${this.hospitals.length} hospitals, ${this.doctors.length} doctors`);
+        
+        if (this.patients.length === 0) {
+            console.log('⚠️ No patients found, generating sample data...');
+            this.generateSampleData();
+        }
+        
+        // Test navigation
+        this.navigateToList('patients');
     }
 
     // Navigate to list pages
