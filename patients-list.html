@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Patients List - Hospital Assignment System</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Open+Sans:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <h1 class="title">
+                <i class="fas fa-users"></i>
+                All Patients
+            </h1>
+            <p class="subtitle">Complete List of Patients in the System</p>
+        </div>
+    </header>
+
+    <!-- Navigation -->
+    <nav class="navigation">
+        <div class="container">
+            <button id="backToMain" class="btn btn-secondary">
+                <i class="fas fa-arrow-left"></i> Back to Main System
+            </button>
+            <div class="nav-actions">
+                <button id="exportPatients" class="btn btn-primary">
+                    <i class="fas fa-download"></i> Export List
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Patients List -->
+    <main class="list-main">
+        <div class="container">
+            <!-- Filters -->
+            <section class="filters-section">
+                <div class="filter-controls">
+                    <div class="filter-group">
+                        <label for="urgencyFilter">Filter by Urgency:</label>
+                        <select id="urgencyFilter" class="filter-select">
+                            <option value="all">All Urgency Levels</option>
+                            <option value="critical">Critical</option>
+                            <option value="urgent">Urgent</option>
+                            <option value="stable">Stable</option>
+                        </select>
+                    </div>
+                    <div class="filter-group">
+                        <label for="assignmentFilter">Filter by Assignment:</label>
+                        <select id="assignmentFilter" class="filter-select">
+                            <option value="all">All Patients</option>
+                            <option value="assigned">Assigned</option>
+                            <option value="unassigned">Unassigned</option>
+                        </select>
+                    </div>
+                    <div class="filter-group">
+                        <label for="searchFilter">Search:</label>
+                        <input type="text" id="searchFilter" class="filter-input" placeholder="Search patients...">
+                    </div>
+                </div>
+            </section>
+
+            <!-- Patients Grid -->
+            <section class="patients-grid-section">
+                <div id="patientsGrid" class="patients-grid">
+                    <!-- Patients will be populated here -->
+                </div>
+            </section>
+
+            <!-- Summary -->
+            <section class="summary-section">
+                <div class="summary-cards">
+                    <div class="summary-card">
+                        <div class="summary-icon critical">
+                            <i class="fas fa-exclamation-triangle"></i>
+                        </div>
+                        <div class="summary-content">
+                            <h3 id="criticalCount">0</h3>
+                            <p>Critical Patients</p>
+                        </div>
+                    </div>
+                    <div class="summary-card">
+                        <div class="summary-icon urgent">
+                            <i class="fas fa-clock"></i>
+                        </div>
+                        <div class="summary-content">
+                            <h3 id="urgentCount">0</h3>
+                            <p>Urgent Patients</p>
+                        </div>
+                    </div>
+                    <div class="summary-card">
+                        <div class="summary-icon stable">
+                            <i class="fas fa-check-circle"></i>
+                        </div>
+                        <div class="summary-content">
+                            <h3 id="stableCount">0</h3>
+                            <p>Stable Patients</p>
+                        </div>
+                    </div>
+                    <div class="summary-card">
+                        <div class="summary-icon assigned">
+                            <i class="fas fa-hospital"></i>
+                        </div>
+                        <div class="summary-content">
+                            <h3 id="assignedCount">0</h3>
+                            <p>Assigned Patients</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2024 Hospital Assignment System | Patients List</p>
+        </div>
+    </footer>
+
+    <script src="patients-list.js"></script>
+</body>
+</html>

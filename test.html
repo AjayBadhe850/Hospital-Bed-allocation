@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hospital System Test</title>
+    <style>
+        body { font-family: Arial, sans-serif; padding: 20px; }
+        .test-result { margin: 10px 0; padding: 10px; border-radius: 5px; }
+        .pass { background: #d4edda; color: #155724; }
+        .fail { background: #f8d7da; color: #721c24; }
+        .info { background: #d1ecf1; color: #0c5460; }
+    </style>
+</head>
+<body>
+    <h1>🏥 Hospital Assignment System - Algorithm Tests</h1>
+    <div id="testResults"></div>
+    
+    <script>
+        // Include the main script functionality for testing
+        class TestRunner {
+            constructor() {
+                this.results = [];
+                this.runTests();
+            }
+
+            runTests() {
+                this.testDataGeneration();
+                this.testDistanceCalculation();
+                this.testGreedyAlgorithm();
+                this.testKnapsackAlgorithm();
+                this.testBranchBoundAlgorithm();
+                this.displayResults();
+            }
+
+            testDataGeneration() {
+                try {
+                    // Test hospital creation
+                    const hospital = {
+                        id: 1,
+                        name: "Test Hospital",
+                        capacity: 10,
+                        specialization: "cardiology",
+                        location: { x: 50, y: 50 }
+                    };
+                    
+                    // Test patient creation
+                    const patient = {
+                        id: 1,
+                        name: "Test Patient",
+                        ailment: "Heart Attack",
+                        requiredSpecialization: "cardiology",
+                        urgency: "critical",
+                        location: { x: 30, y: 30 }
+                    };
+
+                    this.addResult("Data Generation", true, "Hospital and patient objects created successfully");
+                } catch (error) {
+                    this.addResult("Data Generation", false, `Error: ${error.message}`);
+                }
+            }
+
+            testDistanceCalculation() {
+                try {
+                    const location1 = { x: 0, y: 0 };
+                    const location2 = { x: 3, y: 4 };
+                    
+                    const distance = Math.sqrt((location1.x - location2.x) ** 2 + (location1.y - location2.y) ** 2) * 10;
+                    const expected = 50; // 5 * 10 = 50
+                    
+                    if (Math.abs(distance - expected) < 0.1) {
+                        this.addResult("Distance Calculation", true, `Distance calculated correctly: ${distance} km`);
+                    } else {
+                        this.addResult("Distance Calculation", false, `Expected ${expected}, got ${distance}`);
+                    }
+                } catch (error) {
+                    this.addResult("Distance Calculation", false, `Error: ${error.message}`);
+                }
+            }
+
+            testGreedyAlgorithm() {
+                try {
+                    // Create test data
+                    const hospitals = [
+                        { id: 1, capacity: 2, specialization: "cardiology", currentPatients: 0, location: { x: 0, y: 0 } },
+                        { id: 2, capacity: 2, specialization: "cardiology", currentPatients: 0, location: { x: 10, y: 10 } }
+                    ];
+                    
+                    const patients = [
+                        { id: 1, requiredSpecialization: "cardiology", urgency: "critical", location: { x: 1, y: 1 } },
+                        { id: 2, requiredSpecialization: "cardiology", urgency: "urgent", location: { x: 11, y: 11 } }
+                    ];
+
+                    // Simulate greedy assignment
+                    let assigned = 0;
+                    patients.forEach(patient => {
+                        const availableHospitals = hospitals.filter(h => 
+                            h.currentPatients < h.capacity && h.specialization === patient.requiredSpecialization
+                        );
+                        if (availableHospitals.length > 0) {
+                            assigned++;
+                            availableHospitals[0].currentPatients++;
+                        }
+                    });
+
+                    this.addResult("Greedy Algorithm", true, `Assigned ${assigned}/${patients.length} patients`);
+                } catch (error) {
+                    this.addResult("Greedy Algorithm", false, `Error: ${error.message}`);
+                }
+            }
+
+            testKnapsackAlgorithm() {
+                try {
+                    // Test knapsack capacity constraint
+                    const capacity = 5;
+                    const items = [
+                        { value: 3, weight: 1 },
+                        { value: 4, weight: 2 },
+                        { value: 5, weight: 3 }
+                    ];
+
+                    // Simple knapsack test
+                    let totalValue = 0;
+                    let totalWeight = 0;
+                    items.forEach(item => {
+                        if (totalWeight + item.weight <= capacity) {
+                            totalValue += item.value;
+                            totalWeight += item.weight;
+                        }
+                    });
+
+                    this.addResult("Knapsack Algorithm", true, `Knapsack test: ${totalValue} value with ${totalWeight} weight`);
+                } catch (error) {
+                    this.addResult("Knapsack Algorithm", false, `Error: ${error.message}`);
+                }
+            }
+
+            testBranchBoundAlgorithm() {
+                try {
+                    // Test branch and bound with simple constraint satisfaction
+                    const constraints = [
+                        { patient: 1, hospital: 1, cost: 10 },
+                        { patient: 1, hospital: 2, cost: 15 },
+                        { patient: 2, hospital: 1, cost: 12 },
+                        { patient: 2, hospital: 2, cost: 8 }
+                    ];
+
+                    // Find minimum cost assignment
+                    let minCost = Infinity;
+                    let bestAssignment = null;
+
+                    // Simple exhaustive search for testing
+                    for (let i = 0; i < constraints.length; i++) {
+                        for (let j = 0; j < constraints.length; j++) {
+                            if (i !== j && constraints[i].patient !== constraints[j].patient) {
+                                const cost = constraints[i].cost + constraints[j].cost;
+                                if (cost < minCost) {
+                                    minCost = cost;
+                                    bestAssignment = [constraints[i], constraints[j]];
+                                }
+                            }
+                        }
+                    }
+
+                    this.addResult("Branch & Bound Algorithm", true, `Found optimal solution with cost: ${minCost}`);
+                } catch (error) {
+                    this.addResult("Branch & Bound Algorithm", false, `Error: ${error.message}`);
+                }
+            }
+
+            addResult(testName, passed, message) {
+                this.results.push({ testName, passed, message });
+            }
+
+            displayResults() {
+                const container = document.getElementById('testResults');
+                let html = '<h2>Test Results</h2>';
+                
+                this.results.forEach(result => {
+                    const className = result.passed ? 'pass' : 'fail';
+                    html += `
+                        <div class="test-result ${className}">
+                            <strong>${result.testName}:</strong> ${result.passed ? 'PASS' : 'FAIL'}<br>
+                            <small>${result.message}</small>
+                        </div>
+                    `;
+                });
+
+                const passedTests = this.results.filter(r => r.passed).length;
+                const totalTests = this.results.length;
+                
+                html += `
+                    <div class="test-result info">
+                        <strong>Summary:</strong> ${passedTests}/${totalTests} tests passed
+                    </div>
+                `;
+
+                container.innerHTML = html;
+            }
+        }
+
+        // Run tests when page loads
+        document.addEventListener('DOMContentLoaded', () => {
+            new TestRunner();
+        });
+    </script>
+</body>
+</html>

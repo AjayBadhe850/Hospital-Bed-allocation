@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hospitals List - Hospital Assignment System</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Open+Sans:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <h1 class="title">
+                <i class="fas fa-hospital"></i>
+                All Hospitals
+            </h1>
+            <p class="subtitle">Complete List of Hospitals in the System</p>
+        </div>
+    </header>
+
+    <!-- Navigation -->
+    <nav class="navigation">
+        <div class="container">
+            <button id="backToMain" class="btn btn-secondary">
+                <i class="fas fa-arrow-left"></i> Back to Main System
+            </button>
+            <div class="nav-actions">
+                <button id="exportHospitals" class="btn btn-primary">
+                    <i class="fas fa-download"></i> Export List
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hospitals List -->
+    <main class="list-main">
+        <div class="container">
+            <!-- Filters -->
+            <section class="filters-section">
+                <div class="filter-controls">
+                    <div class="filter-group">
+                        <label for="specializationFilter">Filter by Specialization:</label>
+                        <select id="specializationFilter" class="filter-select">
+                            <option value="all">All Specializations</option>
+                            <option value="cardiology">Cardiology</option>
+                            <option value="neurology">Neurology</option>
+                            <option value="orthopedics">Orthopedics</option>
+                            <option value="emergency">Emergency</option>
+                            <option value="pediatrics">Pediatrics</option>
+                        </select>
+                    </div>
+                    <div class="filter-group">
+                        <label for="capacityFilter">Filter by Capacity:</label>
+                        <select id="capacityFilter" class="filter-select">
+                            <option value="all">All Capacities</option>
+                            <option value="low">Low (1-10 beds)</option>
+                            <option value="medium">Medium (11-20 beds)</option>
+                            <option value="high">High (21+ beds)</option>
+                        </select>
+                    </div>
+                    <div class="filter-group">
+                        <label for="searchFilter">Search:</label>
+                        <input type="text" id="searchFilter" class="filter-input" placeholder="Search hospitals...">
+                    </div>
+                </div>
+            </section>
+
+            <!-- Hospitals Grid -->
+            <section class="hospitals-grid-section">
+                <div id="hospitalsGrid" class="hospitals-grid">
+                    <!-- Hospitals will be populated here -->
+                </div>
+            </section>
+
+            <!-- Summary -->
+            <section class="summary-section">
+                <div class="summary-cards">
+                    <div class="summary-card">
+                        <div class="summary-icon total">
+                            <i class="fas fa-hospital"></i>
+                        </div>
+                        <div class="summary-content">
+                            <h3 id="totalHospitals">0</h3>
+                            <p>Total Hospitals</p>
+                        </div>
+                    </div>
+                    <div class="summary-card">
+                        <div class="summary-icon available">
+                            <i class="fas fa-check-circle"></i>
+                        </div>
+                        <div class="summary-content">
+                            <h3 id="availableHospitals">0</h3>
+                            <p>Available Beds</p>
+                        </div>
+                    </div>
+                    <div class="summary-card">
+                        <div class="summary-icon occupied">
+                            <i class="fas fa-bed"></i>
+                        </div>
+                        <div class="summary-content">
+                            <h3 id="occupiedBeds">0</h3>
+                            <p>Occupied Beds</p>
+                        </div>
+                    </div>
+                    <div class="summary-card">
+                        <div class="summary-icon utilization">
+                            <i class="fas fa-chart-pie"></i>
+                        </div>
+                        <div class="summary-content">
+                            <h3 id="avgUtilization">0%</h3>
+                            <p>Avg. Utilization</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2024 Hospital Assignment System | Hospitals List</p>
+        </div>
+    </footer>
+
+    <script src="hospitals-list.js"></script>
+</body>
+</html>

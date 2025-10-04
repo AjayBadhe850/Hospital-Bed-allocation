@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hospital Details - Hospital Assignment System</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Open+Sans:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <h1 class="title">
+                <i class="fas fa-hospital"></i>
+                Hospital Details
+            </h1>
+            <p class="subtitle">Complete Hospital Information & Bed Allocation</p>
+        </div>
+    </header>
+
+    <!-- Navigation -->
+    <nav class="navigation">
+        <div class="container">
+            <button id="backToMain" class="btn btn-secondary">
+                <i class="fas fa-arrow-left"></i> Back to Main System
+            </button>
+            <div class="nav-actions">
+                <button id="printHospital" class="btn btn-primary">
+                    <i class="fas fa-print"></i> Print Details
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hospital Details -->
+    <main class="hospital-detail-main">
+        <div class="container">
+            <div id="hospitalNotFound" class="not-found" style="display: none;">
+                <div class="not-found-content">
+                    <i class="fas fa-hospital"></i>
+                    <h2>Hospital Not Found</h2>
+                    <p>The hospital you're looking for doesn't exist in our system.</p>
+                    <button id="backToSearch" class="btn btn-primary">
+                        <i class="fas fa-search"></i> Search Again
+                    </button>
+                </div>
+            </div>
+
+            <div id="hospitalDetails" class="hospital-details-container">
+                <!-- Hospital Basic Info -->
+                <section class="hospital-basic-info">
+                    <div class="hospital-header">
+                        <div class="hospital-avatar">
+                            <i class="fas fa-hospital"></i>
+                        </div>
+                        <div class="hospital-info">
+                            <h2 id="hospitalName">Loading...</h2>
+                            <div class="hospital-meta">
+                                <span id="hospitalId" class="meta-item">
+                                    <i class="fas fa-id-card"></i> Hospital ID: <span id="hospitalIdValue">-</span>
+                                </span>
+                                <span id="hospitalSpecialization" class="meta-item">
+                                    <i class="fas fa-stethoscope"></i> <span id="specializationValue">-</span>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Hospital Statistics -->
+                <section class="hospital-stats">
+                    <h3><i class="fas fa-chart-bar"></i> Hospital Statistics</h3>
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <div class="stat-icon total">
+                                <i class="fas fa-bed"></i>
+                            </div>
+                            <div class="stat-content">
+                                <h4 id="totalBeds">0</h4>
+                                <p>Total Beds</p>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon occupied">
+                                <i class="fas fa-user-injured"></i>
+                            </div>
+                            <div class="stat-content">
+                                <h4 id="occupiedBeds">0</h4>
+                                <p>Occupied Beds</p>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon available">
+                                <i class="fas fa-check-circle"></i>
+                            </div>
+                            <div class="stat-content">
+                                <h4 id="availableBeds">0</h4>
+                                <p>Available Beds</p>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon utilization">
+                                <i class="fas fa-percentage"></i>
+                            </div>
+                            <div class="stat-content">
+                                <h4 id="utilizationRate">0%</h4>
+                                <p>Utilization Rate</p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Hospital Blueprint -->
+                <section class="hospital-blueprint">
+                    <h3><i class="fas fa-building"></i> Hospital Blueprint & Bed Allocation</h3>
+                    <div class="blueprint-container">
+                        <div id="hospitalBlueprint" class="blueprint-layout">
+                            <!-- Hospital blueprint will be populated here -->
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Assigned Patients -->
+                <section class="assigned-patients">
+                    <h3><i class="fas fa-users"></i> Assigned Patients</h3>
+                    <div id="assignedPatientsList" class="patients-list">
+                        <!-- Assigned patients will be populated here -->
+                    </div>
+                </section>
+
+                <!-- Hospital Staff -->
+                <section class="hospital-staff">
+                    <h3><i class="fas fa-user-md"></i> Hospital Staff</h3>
+                    <div id="hospitalStaffList" class="staff-list">
+                        <!-- Hospital staff will be populated here -->
+                    </div>
+                </section>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2024 Hospital Assignment System | Hospital Detail View</p>
+        </div>
+    </footer>
+
+    <script src="hospital-detail.js"></script>
+</body>
+</html>

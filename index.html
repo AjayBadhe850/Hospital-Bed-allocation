@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🏥 Hospital Bed & Doctor Assignment System</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Open+Sans:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <!-- Header Section -->
+    <header class="header">
+        <div class="container">
+            <h1 class="title">
+                <i class="fas fa-hospital"></i>
+                Hospital Bed & Doctor Assignment System
+            </h1>
+            <p class="subtitle">Intelligent Patient Allocation using Optimization Algorithms</p>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <div class="container">
+            <!-- Patient Search -->
+            <section class="search-section">
+                <div class="search-container">
+                    <h3><i class="fas fa-search"></i> Search Patient</h3>
+                    <div class="search-bar">
+                        <input type="text" id="patientSearch" placeholder="Enter patient name to search..." class="search-input">
+                        <button id="searchPatient" class="btn btn-primary">
+                            <i class="fas fa-search"></i> Search
+                        </button>
+                    </div>
+                    <div id="searchResults" class="search-results"></div>
+                </div>
+            </section>
+
+            <!-- Control Panel -->
+            <section class="control-panel">
+                <div class="algorithm-selector">
+                    <label for="algorithm">Choose Algorithm:</label>
+                    <select id="algorithm" class="algorithm-dropdown">
+                        <option value="all">Compare All Algorithms</option>
+                        <option value="greedy">Greedy Matching</option>
+                        <option value="knapsack">Knapsack </option>
+                        <option value="branch-bound">Branch & Bound</option>
+                    </select>
+                </div>
+                
+                <div class="action-buttons">
+                    <button id="generateData" class="btn btn-secondary">
+                        <i class="fas fa-random"></i> Generate Sample Data
+                    </button>
+                    <button id="runAllocation" class="btn btn-primary">
+                        <i class="fas fa-play"></i> Run Allocation
+                    </button>
+                    <button id="resetSimulation" class="btn btn-danger">
+                        <i class="fas fa-redo"></i> Reset
+                    </button>
+                </div>
+            </section>
+
+            <!-- List Navigation -->
+            <section class="list-navigation">
+                <div class="list-buttons">
+                    <button id="viewPatients" class="btn btn-info">
+                        <i class="fas fa-users"></i> View All Patients
+                    </button>
+                    <button id="viewDoctors" class="btn btn-info">
+                        <i class="fas fa-user-md"></i> View All Doctors
+                    </button>
+                    <button id="viewHospitals" class="btn btn-info">
+                        <i class="fas fa-hospital"></i> View All Hospitals
+                    </button>
+                    <button id="showBedsAvailability" class="btn btn-warning">
+                        <i class="fas fa-bed"></i> Show Beds Availability
+                    </button>
+                </div>
+            </section>
+
+            <!-- Input Forms -->
+            <section class="input-section">
+                <div class="form-grid">
+                    <!-- Hospital Input -->
+                    <div class="form-card">
+                        <h3><i class="fas fa-hospital"></i> Hospitals</h3>
+                        <div class="form-group">
+                            <label>Number of Hospitals:</label>
+                            <input type="number" id="hospitalCount" value="5" min="1" max="20">
+                        </div>
+                        <div class="form-group">
+                            <label>Average Capacity:</label>
+                            <input type="number" id="hospitalCapacity" value="10" min="1" max="50">
+                        </div>
+                        <div class="form-group">
+                            <label>Specializations:</label>
+                            <select id="hospitalSpecializations" multiple>
+                                <option value="cardiology">Cardiology</option>
+                                <option value="neurology">Neurology</option>
+                                <option value="orthopedics">Orthopedics</option>
+                                <option value="emergency">Emergency</option>
+                                <option value="pediatrics">Pediatrics</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Patient Input -->
+                    <div class="form-card">
+                        <h3><i class="fas fa-user-injured"></i> Patients</h3>
+                        <div class="form-group">
+                            <label>Number of Patients:</label>
+                            <input type="number" id="patientCount" value="20" min="1" max="100">
+                        </div>
+                        <div class="form-group">
+                            <label>Urgency Distribution:</label>
+                            <div class="urgency-sliders">
+                                <label>Critical: <span id="criticalValue">30</span>%</label>
+                                <input type="range" id="criticalUrgency" min="0" max="100" value="30">
+                                
+                                <label>Urgent: <span id="urgentValue">40</span>%</label>
+                                <input type="range" id="urgentUrgency" min="0" max="100" value="40">
+                                
+                                <label>Stable: <span id="stableValue">30</span>%</label>
+                                <input type="range" id="stableUrgency" min="0" max="100" value="30">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Doctor Input -->
+                    <div class="form-card">
+                        <h3><i class="fas fa-user-md"></i> Doctors</h3>
+                        <div class="form-group">
+                            <label>Doctors per Hospital:</label>
+                            <input type="number" id="doctorsPerHospital" value="3" min="1" max="10">
+                        </div>
+                        <div class="form-group">
+                            <label>Specialization Match:</label>
+                            <input type="range" id="specializationMatch" min="0" max="100" value="80">
+                            <span id="specializationValue">80%</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Simulation Area -->
+            <section class="simulation-area">
+                <div class="simulation-container">
+                    <!-- Patients Side -->
+                    <div class="patients-side">
+                        <h3><i class="fas fa-users"></i> Patients</h3>
+                        <div id="patientsContainer" class="patients-grid">
+                            <!-- Patients will be dynamically generated here -->
+                        </div>
+                    </div>
+
+                    <!-- Allocation Animation Area -->
+                    <div class="allocation-area">
+                        <div id="allocationLines" class="allocation-lines">
+                            <!-- Allocation lines will be drawn here -->
+                        </div>
+                        <div id="ambulanceContainer" class="ambulance-container">
+                            <!-- Ambulance animations will appear here -->
+                        </div>
+                        <!-- Hospital Symbols -->
+                        <div id="hospitalSymbols" class="hospital-symbols">
+                            <!-- Hospital symbols will be populated here -->
+                        </div>
+                    </div>
+
+                    <!-- Hospitals Side -->
+                    <div class="hospitals-side">
+                        <h3><i class="fas fa-hospital"></i> Hospitals</h3>
+                        <div id="hospitalsContainer" class="hospitals-grid">
+                            <!-- Hospitals will be dynamically generated here -->
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Beds Availability -->
+            <section id="bedsAvailability" class="beds-availability" style="display: none;">
+                <h2><i class="fas fa-bed"></i> Hospital Beds Availability</h2>
+                <div class="beds-container">
+                    <div id="bedsGrid" class="beds-grid">
+                        <!-- Beds availability will be populated here -->
+                    </div>
+                </div>
+            </section>
+
+            <!-- Assignment Details -->
+            <section class="assignment-details">
+                <h2><i class="fas fa-list-alt"></i> Patient Assignments</h2>
+                <div class="assignment-container">
+                    <div class="assignment-filters">
+                        <button id="showAllAssignments" class="btn btn-secondary active">All Patients</button>
+                        <button id="showAssignedOnly" class="btn btn-secondary">Assigned Only</button>
+                        <button id="showUnassignedOnly" class="btn btn-secondary">Unassigned Only</button>
+                    </div>
+                    <div id="assignmentList" class="assignment-list">
+                        <!-- Assignment details will be populated here -->
+                    </div>
+                </div>
+            </section>
+
+            <!-- Results Dashboard -->
+            <section class="results-section">
+                <h2><i class="fas fa-chart-bar"></i> Algorithm Performance Comparison</h2>
+                <div class="results-container">
+                    <div class="results-table">
+                        <table id="resultsTable">
+                            <thead>
+                                <tr>
+                                    <th>Algorithm</th>
+                                    <th>Execution Time</th>
+                                    <th>Patients Assigned</th>
+                                    <th>Avg. Distance</th>
+                                    <th>Utilization</th>
+                                    <th>Efficiency Score</th>
+                                </tr>
+                            </thead>
+                            <tbody id="resultsBody">
+                                <!-- Results will be populated here -->
+                            </tbody>
+                        </table>
+                    </div>
+                    
+                    <div class="performance-charts">
+                        <div class="chart-container">
+                            <h4>Execution Time Comparison</h4>
+                            <div id="timeChart" class="chart">
+                                <!-- Time comparison bars -->
+                            </div>
+                        </div>
+                        
+                        <div class="chart-container">
+                            <h4>Assignment Efficiency</h4>
+                            <div id="efficiencyChart" class="chart">
+                                <!-- Efficiency comparison bars -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; Hospital Assignment System | Built with HTML, CSS & JavaScript</p>
+            <p>Optimization Algorithms: Graph Matching, Knapsack , Branch & Bound</p>
+        </div>
+    </footer>
+
+    <!-- Loading Overlay -->
+    <div id="loadingOverlay" class="loading-overlay">
+        <div class="loading-spinner">
+            <i class="fas fa-hospital fa-spin"></i>
+            <p>Running Optimization Algorithms...</p>
+        </div>
+    </div>
+
+    <script src="config.js"></script>
+    <script src="api.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>

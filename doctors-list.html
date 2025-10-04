@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Doctors List - Hospital Assignment System</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Open+Sans:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <h1 class="title">
+                <i class="fas fa-user-md"></i>
+                All Doctors
+            </h1>
+            <p class="subtitle">Complete List of Doctors in the System</p>
+        </div>
+    </header>
+
+    <!-- Navigation -->
+    <nav class="navigation">
+        <div class="container">
+            <button id="backToMain" class="btn btn-secondary">
+                <i class="fas fa-arrow-left"></i> Back to Main System
+            </button>
+            <div class="nav-actions">
+                <button id="exportDoctors" class="btn btn-primary">
+                    <i class="fas fa-download"></i> Export List
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Doctors List -->
+    <main class="list-main">
+        <div class="container">
+            <!-- Filters -->
+            <section class="filters-section">
+                <div class="filter-controls">
+                    <div class="filter-group">
+                        <label for="specializationFilter">Filter by Specialization:</label>
+                        <select id="specializationFilter" class="filter-select">
+                            <option value="all">All Specializations</option>
+                            <option value="cardiology">Cardiology</option>
+                            <option value="neurology">Neurology</option>
+                            <option value="orthopedics">Orthopedics</option>
+                            <option value="emergency">Emergency</option>
+                            <option value="pediatrics">Pediatrics</option>
+                        </select>
+                    </div>
+                    <div class="filter-group">
+                        <label for="hospitalFilter">Filter by Hospital:</label>
+                        <select id="hospitalFilter" class="filter-select">
+                            <option value="all">All Hospitals</option>
+                        </select>
+                    </div>
+                    <div class="filter-group">
+                        <label for="searchFilter">Search:</label>
+                        <input type="text" id="searchFilter" class="filter-input" placeholder="Search doctors...">
+                    </div>
+                </div>
+            </section>
+
+            <!-- Doctors Grid -->
+            <section class="doctors-grid-section">
+                <div id="doctorsGrid" class="doctors-grid">
+                    <!-- Doctors will be populated here -->
+                </div>
+            </section>
+
+            <!-- Summary -->
+            <section class="summary-section">
+                <div class="summary-cards">
+                    <div class="summary-card">
+                        <div class="summary-icon total">
+                            <i class="fas fa-user-md"></i>
+                        </div>
+                        <div class="summary-content">
+                            <h3 id="totalDoctors">0</h3>
+                            <p>Total Doctors</p>
+                        </div>
+                    </div>
+                    <div class="summary-card">
+                        <div class="summary-icon available">
+                            <i class="fas fa-user-check"></i>
+                        </div>
+                        <div class="summary-content">
+                            <h3 id="availableDoctors">0</h3>
+                            <p>Available Doctors</p>
+                        </div>
+                    </div>
+                    <div class="summary-card">
+                        <div class="summary-icon busy">
+                            <i class="fas fa-user-clock"></i>
+                        </div>
+                        <div class="summary-content">
+                            <h3 id="busyDoctors">0</h3>
+                            <p>Busy Doctors</p>
+                        </div>
+                    </div>
+                    <div class="summary-card">
+                        <div class="summary-icon avg-experience">
+                            <i class="fas fa-graduation-cap"></i>
+                        </div>
+                        <div class="summary-content">
+                            <h3 id="avgExperience">0</h3>
+                            <p>Avg. Experience</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2024 Hospital Assignment System | Doctors List</p>
+        </div>
+    </footer>
+
+    <script src="doctors-list.js"></script>
+</body>
+</html>
