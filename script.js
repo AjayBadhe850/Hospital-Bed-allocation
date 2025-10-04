@@ -16,6 +16,13 @@ class HospitalAssignmentSystem {
     // Initialize the system with data loading
     async initialize() {
         await this.loadData();
+        
+        // Ensure we always have patients to display
+        if (this.patients.length === 0) {
+            console.log('🔄 No patients found, generating sample data...');
+            this.generateSampleData();
+        }
+        
         this.renderVisualization();
         this.renderHospitalSymbols();
         this.updateAssignmentDisplay();
@@ -48,6 +55,12 @@ class HospitalAssignmentSystem {
         } catch (error) {
             console.error('❌ Failed to load data:', error);
             console.log('🔄 Falling back to sample data generation...');
+            this.generateSampleData();
+        }
+        
+        // Final check: ensure we always have patients
+        if (this.patients.length === 0) {
+            console.log('🔄 Final check: No patients found, generating sample data...');
             this.generateSampleData();
         }
     }
@@ -370,6 +383,7 @@ class HospitalAssignmentSystem {
         }
 
         console.log(`✅ Generated ${this.patients.length} patients`);
+        this.showNotification(`✅ Generated ${this.patients.length} patients, ${this.hospitals.length} hospitals, and ${this.doctors.length} doctors!`);
         this.updateDaysInHospital();
         this.saveData(); // Save generated data
         this.renderVisualization();
@@ -1151,6 +1165,20 @@ class HospitalAssignmentSystem {
             const timeDiff = currentDate.getTime() - patient.admissionDate.getTime();
             patient.daysInHospital = Math.floor(timeDiff / (1000 * 3600 * 24));
         });
+    }
+
+    // Show notification
+    showNotification(message) {
+        const notification = document.getElementById('notification');
+        const notificationText = document.getElementById('notificationText');
+        
+        notificationText.textContent = message;
+        notification.style.display = 'block';
+        
+        // Auto-hide after 3 seconds
+        setTimeout(() => {
+            notification.style.display = 'none';
+        }, 3000);
     }
 
     // Test patient list functionality

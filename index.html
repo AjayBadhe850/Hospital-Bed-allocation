@@ -20,6 +20,14 @@
         </div>
     </header>
 
+    <!-- Notification Area -->
+    <div id="notification" class="notification" style="display: none;">
+        <div class="notification-content">
+            <i class="fas fa-info-circle"></i>
+            <span id="notificationText"></span>
+        </div>
+    </div>
+
     <!-- Main Content -->
     <main class="main-content">
         <div class="container">
@@ -50,8 +58,8 @@
                 </div>
                 
                 <div class="action-buttons">
-                    <button id="generateData" class="btn btn-secondary">
-                        <i class="fas fa-random"></i> Generate Sample Data
+                    <button id="generateData" class="btn btn-primary btn-large">
+                        <i class="fas fa-database"></i> Generate Sample Data (20 Patients)
                     </button>
                     <button id="runAllocation" class="btn btn-primary">
                         <i class="fas fa-play"></i> Run Allocation
