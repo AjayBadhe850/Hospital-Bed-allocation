@@ -242,6 +242,10 @@ class HospitalAssignmentSystem {
         document.getElementById('testPatientList').addEventListener('click', () => {
             this.testPatientListFunctionality();
         });
+
+        document.getElementById('addPatient').addEventListener('click', () => {
+            this.addNewPatient();
+        });
     }
 
     updateUrgencyDistribution() {
@@ -1394,6 +1398,59 @@ class HospitalAssignmentSystem {
 
         // Navigate to hospital detail page
         window.location.href = `hospital-detail.html?id=${hospitalId}`;
+    }
+
+    // Add new patient functionality
+    addNewPatient() {
+        // Get user input for new patient
+        const patientName = prompt('Enter patient name:');
+        if (!patientName || patientName.trim() === '') {
+            return;
+        }
+
+        const ailment = prompt('Enter patient condition/ailment:') || 'General Condition';
+        const urgency = prompt('Enter urgency level (critical/urgent/stable):', 'stable').toLowerCase();
+        
+        // Validate urgency
+        if (!['critical', 'urgent', 'stable'].includes(urgency)) {
+            alert('Invalid urgency level. Using "stable" as default.');
+            urgency = 'stable';
+        }
+
+        // Get specialization
+        const specializations = ['cardiology', 'neurology', 'orthopedics', 'emergency', 'pediatrics'];
+        const specialization = prompt(`Enter required specialization (${specializations.join(', ')}):`, 'emergency').toLowerCase();
+        
+        if (!specializations.includes(specialization)) {
+            alert('Invalid specialization. Using "emergency" as default.');
+            specialization = 'emergency';
+        }
+
+        // Create new patient
+        const newPatientId = Math.max(...this.patients.map(p => p.id), -1) + 1;
+        const newPatient = this.createPatient(
+            newPatientId,
+            patientName.trim(),
+            ailment,
+            specialization,
+            urgency,
+            { x: Math.random() * 100, y: Math.random() * 100 }
+        );
+
+        // Add to patients array
+        this.patients.push(newPatient);
+        
+        // Save data
+        this.saveData();
+        
+        // Update display
+        this.renderVisualization();
+        this.updateAssignmentDisplay();
+        
+        // Show success message
+        this.showNotification(`✅ Added new patient: ${patientName} (${urgency})`);
+        
+        console.log(`✅ Added new patient: ${newPatient.name} with ID ${newPatient.id}`);
     }
 }
 
