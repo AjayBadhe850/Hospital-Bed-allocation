@@ -527,11 +527,14 @@ body {
 }
 
 .patient-name {
-    font-size: 0.6rem;
+    font-size: 0.8rem;
     margin-top: 0.25rem;
     font-weight: 600;
     text-align: center;
-    line-height: 1;
+    line-height: 1.2;
+    word-wrap: break-word;
+    max-width: 100%;
+    padding: 0 0.25rem;
 }
 
 .hospital-name {

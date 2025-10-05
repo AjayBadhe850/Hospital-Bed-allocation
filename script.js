@@ -777,7 +777,7 @@ class HospitalAssignmentSystem {
             patientElement.id = `patient-${patient.id}`;
             patientElement.innerHTML = `
                 <i class="fas fa-user"></i>
-                <div class="patient-name">${patient.name.split(' ')[0]}</div>
+                <div class="patient-name">${patient.name}</div>
             `;
             
             let tooltipText = `${patient.name}\n${patient.ailment}\nUrgency: ${patient.urgency}`;
