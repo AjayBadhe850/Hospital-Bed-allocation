@@ -244,7 +244,28 @@ class HospitalAssignmentSystem {
         });
 
         document.getElementById('addPatient').addEventListener('click', () => {
-            this.addNewPatient();
+            this.showAddPatientModal();
+        });
+
+        // Modal event listeners
+        document.getElementById('closeModal').addEventListener('click', () => {
+            this.hideAddPatientModal();
+        });
+
+        document.getElementById('cancelAddPatient').addEventListener('click', () => {
+            this.hideAddPatientModal();
+        });
+
+        document.getElementById('addPatientForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+            this.submitAddPatientForm();
+        });
+
+        // Close modal when clicking outside
+        document.getElementById('addPatientModal').addEventListener('click', (e) => {
+            if (e.target === document.getElementById('addPatientModal')) {
+                this.hideAddPatientModal();
+            }
         });
     }
 
@@ -784,7 +805,12 @@ class HospitalAssignmentSystem {
                 <div class="patient-name">${patient.name}</div>
             `;
             
-            let tooltipText = `${patient.name}\n${patient.ailment}\nUrgency: ${patient.urgency}`;
+            let tooltipText = `${patient.name}`;
+            if (patient.age) tooltipText += ` (Age: ${patient.age})`;
+            tooltipText += `\n${patient.ailment}\nUrgency: ${patient.urgency}`;
+            if (patient.detailedProblem && patient.detailedProblem !== 'No detailed description provided') {
+                tooltipText += `\nDetails: ${patient.detailedProblem}`;
+            }
             if (patient.assignedHospital !== null) {
                 const hospital = this.hospitals.find(h => h.id === patient.assignedHospital);
                 const doctor = this.doctors.find(d => d.id === patient.assignedDoctor);
@@ -1400,42 +1426,65 @@ class HospitalAssignmentSystem {
         window.location.href = `hospital-detail.html?id=${hospitalId}`;
     }
 
-    // Add new patient functionality
-    addNewPatient() {
-        // Get user input for new patient
-        const patientName = prompt('Enter patient name:');
-        if (!patientName || patientName.trim() === '') {
+    // Modal functionality for adding patients
+    showAddPatientModal() {
+        const modal = document.getElementById('addPatientModal');
+        modal.style.display = 'block';
+        document.body.style.overflow = 'hidden'; // Prevent background scrolling
+        
+        // Focus on first input
+        setTimeout(() => {
+            document.getElementById('patientName').focus();
+        }, 100);
+    }
+
+    hideAddPatientModal() {
+        const modal = document.getElementById('addPatientModal');
+        modal.style.display = 'none';
+        document.body.style.overflow = 'auto'; // Restore scrolling
+        
+        // Reset form
+        document.getElementById('addPatientForm').reset();
+    }
+
+    submitAddPatientForm() {
+        // Get form data
+        const formData = {
+            name: document.getElementById('patientName').value.trim(),
+            age: parseInt(document.getElementById('patientAge').value),
+            injuries: document.getElementById('patientInjuries').value.trim(),
+            problem: document.getElementById('patientProblem').value.trim(),
+            urgency: document.getElementById('patientUrgency').value,
+            specialization: document.getElementById('patientSpecialization').value
+        };
+
+        // Validate required fields
+        if (!formData.name || !formData.age || !formData.injuries || !formData.urgency || !formData.specialization) {
+            alert('Please fill in all required fields (*)');
             return;
         }
 
-        const ailment = prompt('Enter patient condition/ailment:') || 'General Condition';
-        const urgency = prompt('Enter urgency level (critical/urgent/stable):', 'stable').toLowerCase();
-        
-        // Validate urgency
-        if (!['critical', 'urgent', 'stable'].includes(urgency)) {
-            alert('Invalid urgency level. Using "stable" as default.');
-            urgency = 'stable';
-        }
-
-        // Get specialization
-        const specializations = ['cardiology', 'neurology', 'orthopedics', 'emergency', 'pediatrics'];
-        const specialization = prompt(`Enter required specialization (${specializations.join(', ')}):`, 'emergency').toLowerCase();
-        
-        if (!specializations.includes(specialization)) {
-            alert('Invalid specialization. Using "emergency" as default.');
-            specialization = 'emergency';
+        // Validate age
+        if (formData.age < 1 || formData.age > 120) {
+            alert('Please enter a valid age between 1 and 120');
+            return;
         }
 
         // Create new patient
         const newPatientId = Math.max(...this.patients.map(p => p.id), -1) + 1;
         const newPatient = this.createPatient(
             newPatientId,
-            patientName.trim(),
-            ailment,
-            specialization,
-            urgency,
+            formData.name,
+            formData.injuries,
+            formData.specialization,
+            formData.urgency,
             { x: Math.random() * 100, y: Math.random() * 100 }
         );
+
+        // Add additional properties
+        newPatient.age = formData.age;
+        newPatient.detailedProblem = formData.problem || 'No detailed description provided';
+        newPatient.admissionDate = new Date();
 
         // Add to patients array
         this.patients.push(newPatient);
@@ -1447,10 +1496,13 @@ class HospitalAssignmentSystem {
         this.renderVisualization();
         this.updateAssignmentDisplay();
         
-        // Show success message
-        this.showNotification(`✅ Added new patient: ${patientName} (${urgency})`);
+        // Hide modal
+        this.hideAddPatientModal();
         
-        console.log(`✅ Added new patient: ${newPatient.name} with ID ${newPatient.id}`);
+        // Show success message
+        this.showNotification(`✅ Added new patient: ${formData.name} (Age: ${formData.age}, ${formData.urgency})`);
+        
+        console.log(`✅ Added new patient: ${newPatient.name} with ID ${newPatient.id}`, newPatient);
     }
 }
 
